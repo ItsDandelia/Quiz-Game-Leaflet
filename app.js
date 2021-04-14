@@ -21,7 +21,7 @@ var random_city_lng = random_city.lng;
 var random_city_name = random_city.city;
 var random_city_state = random_city.admin_name;
 console.log(random_city_name, random_city_state);
-document.getElementById("city_state").innerHTML = String(random_city_name + ', ' + random_city_state);
+document.getElementById("city_state").innerHTML = String(random_city_name + ',  ' + random_city_state);
 var marker, newMarker, marker_id, newMarker_id;
 // var random_city= null, random_city_lat = null, random_city_lng = null, random_city_name = null, random_city_state = null;
 var hist = [];
@@ -34,9 +34,9 @@ function addMarker(e){
         // var tag = document.createElement('city_state');
         // var text = document.createTextNode('Hello');
         //var city = document.getElementByID('city_state');
-        
+        console.log(flag);
         if (flag<6){
-                console.log(flag);
+                
                 // random_city = values[parseInt(Math.random() * values.length)]
                 // random_city_lat = random_city.lat;
                 // random_city_lng = random_city.lng;
@@ -97,20 +97,21 @@ function addMarker(e){
                 random_city_name = random_city.city;
                 random_city_state = random_city.admin_name;
                 console.log(random_city.city, random_city.admin_name);
-                document.getElementById("city_state").innerHTML = String(random_city_name + ',' + random_city_state);
+                document.getElementById("city_state").innerHTML = String(random_city_name + ',  ' + random_city_state);
                 document.getElementById("city_state").style.display = 'block';
                 }
                 else {
                         document.getElementById("text").style.display = 'none';
+                        document.getElementById("info").style.display = 'none';
                         document.getElementById("view_score").style.display = 'block';
-                        document.getElementById('view_score').innerHTML = 'View your score';
+                        //document.getElementById('view_score').innerHTML = 'View your score';
                 }
               
                 
         } 
         
 
-        if (flag>5) {
+        if (flag>5 && flag<7) {
                 var distances = []
                 for (var i=0; i<5; i++){
                         distances.push(hist[i].distance);
@@ -119,9 +120,17 @@ function addMarker(e){
                 index = distances.indexOf(min_distance);
 
                 console.log(hist[index].city, hist[index].state, hist[index].distance);
-                document.getElementById("view_score").innerHTML = String(hist[index].city +  hist[index].state + hist[index].distance + ' ' +points);
+                document.getElementById("view_score").style.display = 'none';
+                document.getElementById("point_system").style.display = 'block';
+                document.getElementById("total_points").innerHTML = String('Total Points: '+points);
+                document.getElementById("guess").innerHTML = String('Closest Guess: ' + hist[index].city + ', ' + hist[index].state + ' ('+hist[index].distance+'km)');
+                document.getElementById("restart").style.display = 'block';
+                
+                //document.getElementById("view_score").innerHTML = String(hist[index].city +  hist[index].state + hist[index].distance + ' ' +points);
         }
-        
+        if (flag>6){
+            document.getElementById("restart").onclick = location.reload();
+        }
         
         
         }
@@ -164,4 +173,6 @@ function total_points(distance, points){
     }
     return points;
 }
+
+
 //var distance = getDistance([lat1, lng1], [lat2, lng2])
