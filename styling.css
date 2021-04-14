@@ -1,0 +1,37 @@
+#map
+{
+    
+    height: 100vh;
+    /* z-index: -1; */
+    
+}
+
+#text{
+    
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30%;
+        height: 10%;
+        z-index: 314159;
+        background-color: chartreuse;
+        text-align: center;
+        pointer-events: none;
+        
+    
+}
+
+#view_score{
+    
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    width: 30%;
+    height: 10%;
+    z-index: 314159;
+    background-color: chartreuse;
+    text-align: center;
+    pointer-events: none;
+    display: none;
+
+}

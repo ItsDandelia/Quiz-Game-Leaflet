@@ -1,5 +1,5 @@
 // Initialize leaflet.js
-var L = require('leaflet');
+//var L = require('leaflet');
 
 // Initialize the map
 const map = L.map('map',{zoom: 4.8}).setView([23.2599, 77.4126]);
@@ -24,7 +24,10 @@ console.log(random_city_name, random_city_state);
 document.getElementById("city_state").innerHTML = String(random_city_name + ', ' + random_city_state);
 var marker, newMarker, marker_id, newMarker_id;
 // var random_city= null, random_city_lat = null, random_city_lng = null, random_city_name = null, random_city_state = null;
-var history = [];
+var hist = [];
+var points = 0;
+// var acb = new Array();
+
 var flag=0;
 function addMarker(e){
         flag += 1;
@@ -77,14 +80,16 @@ function addMarker(e){
                 
                 var distance = Math.round(getDistance([newMarker_lat, newMarker_lng],[marker_lat, marker_lng])/1000); //converting to kilometers
                 console.log(distance);
-                history.push(
+                points = total_points (distance, points);
+                console.log(points);
+                hist.push(
                         {
                         'city': random_city_name,
                         'state':random_city_state,
                         'distance':distance
                         }
                 )
-                console.log(history.length, history);
+                console.log(hist.length, hist);
                 if (flag<5){
                 random_city = values[parseInt(Math.random() * values.length)]
                 random_city_lat = random_city.lat;
@@ -108,13 +113,13 @@ function addMarker(e){
         if (flag>5) {
                 var distances = []
                 for (var i=0; i<5; i++){
-                        distances.push(history[i].distance);
+                        distances.push(hist[i].distance);
                 }
                 min_distance = Math.min.apply(Math,distances);
                 index = distances.indexOf(min_distance);
 
-                console.log(history[index].city, history[index].state, history[index].distance);
-                document.getElementById("view_score").innerHTML = String(history[index].city +  history[index].state + history[index].distance);
+                console.log(hist[index].city, hist[index].state, hist[index].distance);
+                document.getElementById("view_score").innerHTML = String(hist[index].city +  hist[index].state + hist[index].distance + ' ' +points);
         }
         
         
@@ -139,4 +144,24 @@ function getDistance(origin, destination) {
 function toRadian(degree) {
         return degree*Math.PI/180;
     }
+
+function total_points(distance, points){
+    console.log('I worked');
+    console.log(distance, points);
+    if (0< distance && distance < 20){
+        points += 200;
+    }
+    else if (21< distance && distance< 50){
+        points += 150;
+    }
+    else if (51< distance && distance<200){
+        points += 100;
+    }
+    else if (201 < distance && distance< 400){
+        points += 50;
+    } else {
+        points += 0;
+    }
+    return points;
+}
 //var distance = getDistance([lat1, lng1], [lat2, lng2])
